@@ -1,10 +1,12 @@
 import "./tweetList.css";
 import Tweet from "../tweet/tweet";
 
-export function TweetList() {
+export function TweetList({ list }) {
   return (
     <div className="tweetList">
-      <p>tweetList Component</p>
+      {list.map((t, id) => {
+        return <Tweet key={id} tweet={t} />;
+      })}
     </div>
   );
 }

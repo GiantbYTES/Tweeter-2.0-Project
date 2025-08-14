@@ -1,9 +1,13 @@
 import "./tweet.css";
 
-export function Tweet() {
+export function Tweet({ tweet }) {
   return (
     <div className="tweet">
-      <p>tweet Component</p>
+      <div className="header">
+        <div className="user">{tweet.user}</div>
+        <div className="date">{tweet.date}</div>
+      </div>
+      <div className="tweetText">{tweet.text}</div>
     </div>
   );
 }

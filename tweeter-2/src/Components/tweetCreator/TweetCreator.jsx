@@ -13,15 +13,12 @@ export function TweetCreator() {
   }
   const savedList = () => {
     const stored = JSON.parse(localStorage.tweetList || "[]");
-    return stored.length > 0 ? stored : [{ text: "" }];
+    return stored;
   };
   const [list, setList] = useState(savedList());
   function addTweet() {
     if (tweet.text !== "") {
-      if (list[0].text === "") {
-        list.splice(0, 1);
-      }
-      const newList = list.concat(tweet);
+      const newList = [tweet].concat(list);
       setList(newList);
       setTweet({ user: "Dave", text: "", category: "" });
       localStorage.tweetList = JSON.stringify(newList);
@@ -44,7 +41,7 @@ export function TweetCreator() {
           </button>
         </div>
       </div>
-      <TweetList />
+      <TweetList list={list} />
     </div>
   );
 }

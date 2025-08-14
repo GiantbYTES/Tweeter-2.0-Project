@@ -1,3 +1,31 @@
 .tweet {
-	
+  display: flex;
+  flex-direction: column;
+  background-color: #343a40;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.user {
+  display: flex;
+  align-items: center;
+  color: #8c9194;
+}
+.date {
+  font-size: 12px;
+  color: #8c9194;
+}
+.tweetText {
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
 }
