@@ -5,11 +5,17 @@ import moment from "moment";
 
 export function TweetCreator() {
   const [tweet, setTweet] = useState({ user: "Dave", text: "", date: "" });
+  const [isdisabled, setIsdisabled] = useState(true);
 
   function handleChangeText(event) {
     const date = moment().format("YYYY-MM-DDTHH:mm:ss.SSS[Z]");
     setTweet({ ...tweet, text: event.target.value, date: date });
-    console.log(tweet);
+    console.log(event.target.value.length);
+    event.target.value.length > 140
+      ? setIsdisabled(true)
+      : setIsdisabled(false);
+
+    console.log(event);
   }
   const savedList = () => {
     const stored = JSON.parse(localStorage.tweetList || "[]");
@@ -17,10 +23,10 @@ export function TweetCreator() {
   };
   const [list, setList] = useState(savedList());
   function addTweet() {
-    if (tweet.text !== "") {
+    if (tweet.text !== "" && tweet.text.length < 140) {
       const newList = [tweet].concat(list);
       setList(newList);
-      setTweet({ user: "Dave", text: "", category: "" });
+      setTweet({ user: "Dave", text: "", date: "" });
       localStorage.tweetList = JSON.stringify(newList);
       console.log(list);
     }
@@ -36,7 +42,11 @@ export function TweetCreator() {
           placeholder="What you have in mind..."
         ></textarea>
         <div className="tweetButtonContainer">
-          <button className="tweetButton" onClick={addTweet}>
+          <button
+            className="tweetButton"
+            onClick={addTweet}
+            disabled={isdisabled}
+          >
             Tweet
           </button>
         </div>

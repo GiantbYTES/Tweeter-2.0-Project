@@ -28,4 +28,5 @@
   margin-bottom: 8px;
   display: flex;
   align-items: flex-start;
+  word-break: break-word;
 }

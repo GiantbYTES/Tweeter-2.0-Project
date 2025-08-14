@@ -45,3 +45,10 @@
   cursor: pointer;
   font-size: large;
 }
+
+.creatorContainer button:disabled {
+  background-color: #657786;
+  color: #aab8c2;
+  cursor: default;
+  opacity: 0.6;
+}
