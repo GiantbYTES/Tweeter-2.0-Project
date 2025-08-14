@@ -7,7 +7,11 @@ import TweetCreator from "./Components/tweetCreator/tweetCreator";
 function App() {
   const [count, setCount] = useState(0);
 
-  return <></>;
+  return (
+    <>
+      <TweetCreator />
+    </>
+  );
 }
 
 export default App;
