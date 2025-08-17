@@ -1,0 +1,57 @@
+.User {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 50%;
+}
+.title {
+  font-size: 34px;
+  color: #ffffff;
+  margin: 10px 0;
+}
+.changeUser {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.titleTextBox {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: #15202b;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+.userTextBox {
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  background-color: #15202b;
+  color: #ffffff;
+}
+.userInput {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  background-color: #15202b;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+.userButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.userButton {
+  padding: 10px 20px;
+  background-color: #1da1f2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: large;
+}

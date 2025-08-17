@@ -3,9 +3,9 @@ import TweetList from "../tweetList/tweetList";
 import { useEffect, useState } from "react";
 import moment from "moment";
 
-export function TweetCreator() {
+export function TweetCreator({ username }) {
   const [tweet, setTweet] = useState({
-    userName: "Dave",
+    userName: username,
     content: "",
     date: "",
   });
@@ -22,6 +22,11 @@ export function TweetCreator() {
       : setIsdisabled(false);
   }
   const [list, setList] = useState([]);
+  
+  useEffect(() => {
+    setTweet(prev => ({ ...prev, userName: username }));
+  }, [username]);
+  
   useEffect(() => {
     const getTweets = async function () {
       setIsLoadingTweets(true);
@@ -81,7 +86,7 @@ export function TweetCreator() {
         );
         const refreshedData = await refreshRes.json();
         setList(refreshedData);
-        setTweet({ userName: "Dave", content: "", date: "" });
+        setTweet({ userName: username, content: "", date: "" });
       } catch (error) {
         console.log(error.message);
       } finally {
