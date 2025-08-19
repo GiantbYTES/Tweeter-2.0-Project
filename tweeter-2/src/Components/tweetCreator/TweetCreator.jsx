@@ -2,6 +2,7 @@ import "./tweetCreator.css";
 import TweetList from "../tweetList/tweetList";
 import { useEffect, useState, useContext } from "react";
 import moment from "moment";
+import { supabase } from "../../supabaseClient.js";
 
 export function TweetCreator({ username }) {
   const [tweet, setTweet] = useState({
@@ -31,13 +32,15 @@ export function TweetCreator({ username }) {
     const getTweets = async function () {
       setIsLoadingTweets(true);
       try {
-        const res = await fetch(
-          "https://uckmgdznnsnusvmyfvsb.supabase.co/rest/v1/Tweets?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVja21nZHpubnNudXN2bXlmdnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0ODU5NjAsImV4cCI6MjA3MDA2MTk2MH0.D82S0DBivlsXCCAdpTRB3YqLqTOIP7MUj-p1R8Lj9Jo"
-        );
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+        let { data, error } = await supabase
+          .from("Tweets table")
+          .select("*")
+          .order("date", { ascending: false });
+
+        if (error) {
+          throw error;
         }
-        const data = await res.json();
+
         setList(data);
       } catch (error) {
         console.log(error.message);
@@ -56,33 +59,23 @@ export function TweetCreator({ username }) {
     if (tweet.content !== "" && tweet.content.length <= 140) {
       setIsPostingTweet(true);
       try {
-        const res = await fetch(
-          "https://uckmgdznnsnusvmyfvsb.supabase.co/rest/v1/Tweets",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVja21nZHpubnNudXN2bXlmdnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0ODU5NjAsImV4cCI6MjA3MDA2MTk2MH0.D82S0DBivlsXCCAdpTRB3YqLqTOIP7MUj-p1R8Lj9Jo",
-              apikey:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVja21nZHpubnNudXN2bXlmdnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0ODU5NjAsImV4cCI6MjA3MDA2MTk2MH0.D82S0DBivlsXCCAdpTRB3YqLqTOIP7MUj-p1R8Lj9Jo",
-            },
-            body: JSON.stringify({
+        const { data, error } = await supabase
+          .from("Tweets table")
+          .insert([
+            {
               content: tweet.content,
               userName: tweet.userName,
               date: tweet.date,
-            }),
-          }
-        );
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+            },
+          ])
+          .select();
+
+        if (error) {
+          throw error;
         }
-        const newTweet = {
-          content: tweet.content,
-          userName: tweet.userName,
-          date: tweet.date,
-        };
-        setList((prevList) => [...prevList, newTweet]);
+
+        const newTweet = data[0];
+        setList((prevList) => [newTweet, ...prevList]);
         setTweet({ userName: username, content: "", date: "" });
       } catch (error) {
         console.log(error.message);
